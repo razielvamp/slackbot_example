@@ -1,0 +1,19 @@
+# systemd service example
+
+[Unit]
+Description=SLACK_BOT
+After=network.target network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=1
+User=${some_user_name}
+ExecStart=/usr/bin/env python3 ${path_to_slackbot}/daemon.py
+WorkingDirectory=${path_to_slackbot}
+Environment=AUTHKEY=${authentication_token}
+Environment=TEAM=${team_where_bot_created_name}
+
+[Install]
+WantedBy=multi-user.target
